@@ -67,16 +67,27 @@ export default function Actions(props: ActionProps) {
 
   return (
     <ActionPanel>
-      {props.type === 'dummyPrompt' && currentPrompt.length > 0 && (
+      {props.type === 'dummyPrompt' && (
         <>
           {preferences.imeFix && <Action title="" />}
 
-          <Action
-            title="Submit Prompt"
-            icon={Icon.Rocket}
-            onAction={submitPrompt}
-            shortcut={{ modifiers: ['cmd'], key: 'enter' }}
-          />
+          {currentPrompt.length > 0 && (
+            <Action
+              title="Submit Prompt"
+              icon={Icon.Rocket}
+              onAction={submitPrompt}
+              shortcut={{ modifiers: ['cmd'], key: 'enter' }}
+            />
+          )}
+
+          {chatMessages.length > 0 && (
+            <Action
+              title="Clear Conversation"
+              icon={Icon.Trash}
+              onAction={clear}
+              style={Action.Style.Destructive}
+            />
+          )}
         </>
       )}
 
