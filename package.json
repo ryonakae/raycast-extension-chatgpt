@@ -42,7 +42,9 @@
   "icon": "command-icon.png",
   "license": "MIT",
   "lint-staged": {
-    "*.{ts,tsx}": "bash -c 'yarn fix-lint'"
+    "*.{ts,tsx}": [
+      "bash -c 'yarn fix-lint'"
+    ]
   },
   "preferences": [
     {
