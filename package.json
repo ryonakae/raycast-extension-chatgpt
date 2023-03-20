@@ -9,14 +9,23 @@
   ],
   "commands": [
     {
-      "name": "chatgpt",
+      "name": "index",
       "title": "ChatGPT",
       "description": "Talk with the ChatGPT",
-      "mode": "view"
+      "mode": "view",
+      "arguments": [
+        {
+          "name": "prompt",
+          "placeholder": "Prompt",
+          "type": "text",
+          "required": true
+        }
+      ]
     }
   ],
   "dependencies": {
-    "@raycast/api": "^1.48.9"
+    "@raycast/api": "^1.48.9",
+    "zustand": "^4.3.6"
   },
   "devDependencies": {
     "@raycast/eslint-config": "1.0.5",
@@ -38,10 +47,91 @@
   "preferences": [
     {
       "name": "apiKey",
-      "description": "Enter your OpenAI API Key.",
+      "description": "Enter your OpenAI API Key",
       "type": "password",
       "required": true,
       "title": "OpenAI API key"
+    },
+    {
+      "name": "model",
+      "description": "Select model",
+      "type": "dropdown",
+      "required": false,
+      "title": "Model",
+      "default": "gpt-3.5-turbo",
+      "data": [
+        {
+          "title": "gpt-4",
+          "value": "gpt-4"
+        },
+        {
+          "title": "gpt-4-0314",
+          "value": "gpt-4-0314"
+        },
+        {
+          "title": "gpt-4-32k",
+          "value": "gpt-4-32k"
+        },
+        {
+          "title": "gpt-4-32k-0314",
+          "value": "gpt-4-32k-0314"
+        },
+        {
+          "title": "gpt-3.5-turbo",
+          "value": "gpt-3.5-turbo"
+        },
+        {
+          "title": "gpt-3.5-turbo-0301",
+          "value": "gpt-3.5-turbo-0301"
+        }
+      ]
+    },
+    {
+      "name": "temperature",
+      "description": "What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.",
+      "type": "textfield",
+      "required": false,
+      "default": "0.7",
+      "title": "Temperature"
+    },
+    {
+      "name": "maxTokens",
+      "description": "The maximum number of tokens to generate in the chat completion.",
+      "type": "textfield",
+      "required": false,
+      "default": "1024",
+      "title": "Maximum length"
+    },
+    {
+      "name": "stop",
+      "description": "The maximum number of tokens to generate in the chat completion.",
+      "type": "textfield",
+      "required": false,
+      "title": "Stop sequences"
+    },
+    {
+      "name": "topP",
+      "description": "Up to 4 sequences where the API will stop generating further tokens.",
+      "type": "textfield",
+      "required": false,
+      "default": "1",
+      "title": "Top P"
+    },
+    {
+      "name": "frequencyPenalty",
+      "description": "Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far, decreasing the model's likelihood to repeat the same line verbatim.",
+      "type": "textfield",
+      "required": false,
+      "default": "0",
+      "title": "Frequency penalty"
+    },
+    {
+      "name": "presencePenalty",
+      "description": "Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics.",
+      "type": "textfield",
+      "required": false,
+      "default": "0",
+      "title": "Presence penalty"
     }
   ],
   "scripts": {
