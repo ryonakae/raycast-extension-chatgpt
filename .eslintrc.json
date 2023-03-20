@@ -1,0 +1,47 @@
+{
+  "root": true,
+  "extends": ["@raycast"],
+  "rules": {
+    "import/no-cycle": "error",
+    "import/no-unresolved": "warn",
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "object",
+          "type"
+        ],
+        "pathGroups": [
+          {
+            "pattern": "{preact,preact/**}",
+            "group": "builtin",
+            "position": "before"
+          },
+          {
+            "pattern": "@/**",
+            "group": "parent",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["builtin"],
+        "alphabetize": {
+          "order": "asc"
+        },
+        "newlines-between": "always"
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true
+      }
+    }
+  }
+}

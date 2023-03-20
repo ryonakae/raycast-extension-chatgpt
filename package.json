@@ -1,0 +1,56 @@
+{
+  "name": "raycast-extension-chatgpt",
+  "description": "An extension that can talk with the ChatGPT",
+  "version": "1.0.0",
+  "author": "ryonakae",
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "categories": [
+    "Web"
+  ],
+  "commands": [
+    {
+      "name": "chatgpt",
+      "title": "ChatGPT",
+      "description": "Talk with the ChatGPT",
+      "mode": "view"
+    }
+  ],
+  "dependencies": {
+    "@raycast/api": "^1.48.9"
+  },
+  "devDependencies": {
+    "@raycast/eslint-config": "1.0.5",
+    "@types/node": "18.8.3",
+    "@types/react": "18.0.9",
+    "eslint": "^7.32.0",
+    "eslint-import-resolver-typescript": "^3.5.3",
+    "eslint-plugin-import": "^2.27.5",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.0",
+    "prettier": "^2.5.1",
+    "typescript": "^4.4.3"
+  },
+  "icon": "command-icon.png",
+  "license": "MIT",
+  "lint-staged": {
+    "*.{ts,tsx}": "bash -c 'yarn fix-lint'"
+  },
+  "preferences": [
+    {
+      "name": "apiKey",
+      "description": "Enter your OpenAI API Key.",
+      "type": "password",
+      "required": true,
+      "title": "OpenAI API key"
+    }
+  ],
+  "scripts": {
+    "build": "ray build -e dist",
+    "dev": "ray develop",
+    "fix-lint": "ray lint --fix",
+    "lint": "ray lint",
+    "postinstall": "husky install",
+    "publish": "ray publish"
+  },
+  "title": "ChatGPT"
+}
