@@ -1,9 +1,10 @@
-import { getPreferenceValues, Icon, LaunchProps, List } from '@raycast/api'
+import { getPreferenceValues, LaunchProps, List } from '@raycast/api'
 
 import { useState } from 'react'
 import { useMount, useUpdateEffect } from 'react-use'
 
 import { useStore, updateState, loadState } from '@/Store'
+import Actions from '@/components/Actions'
 import Message from '@/components/Message'
 import Prompt from '@/components/Prompt'
 import useCompletion from '@/hooks/useCompletion'
@@ -17,10 +18,9 @@ export default function Command(
   props: LaunchProps<{ arguments: CommandProps }>
 ) {
   const { prompt: defaultPrompt } = props.arguments
-  const { currentPrompt, chatMessages, loading, lastSelectedItemIndex } =
+  const { currentPrompt, chatMessages, loading, totalTokens, selectedItemId } =
     useStore()
   const { chatCompletion } = useCompletion()
-  const [selectedItemId, setSelectedItemId] = useState('')
   const preferences = getPreferenceValues<Preferences>()
 
   function onSearchTextChange(text: string) {
@@ -28,8 +28,11 @@ export default function Command(
     updateState({ currentPrompt: text })
 
     if (text.length > 0) {
-      console.log('prompt selected')
-      setSelectedItemId('prompt')
+      if (preferences.imeFix) {
+        updateState({ selectedItemId: 'dummyPrompt' })
+      } else {
+        updateState({ selectedItemId: 'prompt' })
+      }
     }
   }
 
@@ -38,20 +41,12 @@ export default function Command(
 
     await loadState()
 
-    setSelectedItemId(String(lastSelectedItemIndex))
-
     if (defaultPrompt) {
       await chatCompletion(defaultPrompt)
+    } else {
+      onSearchTextChange('')
     }
   })
-
-  useUpdateEffect(() => {
-    updateState({ lastSelectedItemIndex: chatMessages.length - 1 })
-  }, [chatMessages, lastSelectedItemIndex])
-
-  useUpdateEffect(() => {
-    setSelectedItemId(String(lastSelectedItemIndex))
-  }, [lastSelectedItemIndex])
 
   return (
     <List
@@ -59,28 +54,35 @@ export default function Command(
       searchBarPlaceholder="Your prompt here"
       onSearchTextChange={onSearchTextChange}
       searchText={currentPrompt}
-      isShowingDetail
+      isShowingDetail={chatMessages.length > 0}
       isLoading={loading}
       selectedItemId={selectedItemId}
       navigationTitle={`ChatGPT (Model: ${preferences.model})`}
     >
       {/* prompt */}
-      <List.Section title="Prompt">
-        <Prompt />
-      </List.Section>
-
-      {/* messages */}
-      {chatMessages.length > 0 && (
-        <List.Section title="Messages">
-          {chatMessages.map((message, index) => (
-            <Message key={index} index={index} message={message} />
-          ))}
+      {preferences.imeFix ? (
+        <>
+          <List.Item
+            title=""
+            subtitle="Prompt"
+            id="dummyPrompt"
+            actions={<Actions type="dummyPrompt" />}
+          />
+          <Prompt />
+        </>
+      ) : (
+        <List.Section title="Prompt">
+          <Prompt />
         </List.Section>
       )}
 
-      {/* empty */}
-      {chatMessages.length === 0 && (
-        <List.EmptyView icon={Icon.Message} title="Let's start a chat!" />
+      {/* messages */}
+      {chatMessages.length > 0 && (
+        <List.Section title={`Messages (Total: ${totalTokens} tokens)`}>
+          {[...chatMessages].reverse().map((message, index) => (
+            <Message key={index} index={index} message={message} />
+          ))}
+        </List.Section>
       )}
     </List>
   )

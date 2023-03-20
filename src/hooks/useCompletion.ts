@@ -80,6 +80,7 @@ export default function useCompletion() {
             },
           ],
           totalTokens: data.usage.total_tokens,
+          selectedItemId: 'message-0', // 一番上のメッセージを選択状態にする
         })
       })
       .catch(async (err: Error) => {

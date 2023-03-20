@@ -2,7 +2,7 @@ export type State = {
   loading: boolean
   currentPrompt: string
   chatMessages: ChatMessage[]
-  lastSelectedItemIndex: number
+  selectedItemId: string
   totalTokens: number
 }
 
@@ -15,6 +15,7 @@ export type Preferences = {
   topP: string
   frequencyPenalty: string
   presencePenalty: string
+  imeFix: boolean
 }
 
 export type OpenAiApiChatRequest = {

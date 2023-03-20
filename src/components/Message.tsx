@@ -38,11 +38,9 @@ export default function Message({ index, message }: MessageProps) {
   function updateTokens(text: string) {
     const tokens = encode(text)
     setTokens(tokens.length)
-    console.log('updateTokens', tokens.length)
   }
 
   useMount(() => {
-    console.log('Message mounted', message.content)
     setTimeout(() => {
       updateTokens(message.content)
     }, 100)
@@ -54,7 +52,7 @@ export default function Message({ index, message }: MessageProps) {
 
   return (
     <List.Item
-      id={String(index)}
+      id={`message-${index}`}
       title={getName(message.role)}
       icon={getListIcon(message.role)}
       subtitle={message.content}

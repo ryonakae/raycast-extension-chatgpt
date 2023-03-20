@@ -141,6 +141,14 @@
       "required": false,
       "default": "0",
       "title": "Presence penalty"
+    },
+    {
+      "name": "imeFix",
+      "description": "Fixes problems during IME conversion in Japanese, Chinese, Korean, etc. Empty list items are displayed at the top of the list. To submit the prompt, press the bottom of the keyboard once and then press Enter.",
+      "type": "checkbox",
+      "required": false,
+      "title": "IME Fix",
+      "label": "Fixes problems during IME conversion"
     }
   ],
   "scripts": {

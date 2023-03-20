@@ -14,7 +14,6 @@ export default function Prompt() {
   function updateTokens(text: string) {
     const tokens = encode(text)
     setTokens(tokens.length)
-    console.log('updateTokens', tokens.length)
   }
 
   useMount(() => {
@@ -30,7 +29,12 @@ export default function Prompt() {
       id="prompt"
       icon={Icon.Bubble}
       title={currentPrompt}
-      accessories={[{ text: `${tokens}`, tooltip: `${tokens} tokens` }]}
+      subtitle={currentPrompt.length === 0 ? "Let's start a chat!" : ''}
+      accessories={
+        currentPrompt.length > 0
+          ? [{ text: `${tokens}`, tooltip: `${tokens} tokens` }]
+          : []
+      }
       actions={<Actions type="prompt" />}
     />
   )

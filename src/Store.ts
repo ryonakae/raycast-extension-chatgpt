@@ -8,7 +8,7 @@ export const useStore = create<State>(set => ({
   loading: false,
   currentPrompt: '',
   chatMessages: [],
-  lastSelectedItemIndex: 0,
+  selectedItemId: '',
   totalTokens: 0,
 }))
 
@@ -21,6 +21,6 @@ export async function loadState() {
   const item = await LocalStorage.getItem<string>('state')
 
   if (item) {
-    useStore.setState(JSON.parse(item))
+    useStore.setState({ ...(JSON.parse(item) as State), loading: false })
   }
 }
