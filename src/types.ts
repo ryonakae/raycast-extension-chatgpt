@@ -15,6 +15,7 @@ export type Preferences = {
   topP: string
   frequencyPenalty: string
   presencePenalty: string
+  saveMessages: boolean
   imeFix: boolean
 }
 

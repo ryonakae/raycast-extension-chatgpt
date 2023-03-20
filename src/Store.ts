@@ -1,8 +1,8 @@
-import { LocalStorage } from '@raycast/api'
+import { getPreferenceValues, LocalStorage } from '@raycast/api'
 
 import { create } from 'zustand'
 
-import { State } from '@/types'
+import { Preferences, State } from '@/types'
 
 export const useStore = create<State>(set => ({
   loading: false,
@@ -12,12 +12,21 @@ export const useStore = create<State>(set => ({
   totalTokens: 0,
 }))
 
+const preferences = getPreferenceValues<Preferences>()
+
 export async function updateState(keyValue: { [T in keyof State]?: State[T] }) {
   useStore.setState({ ...useStore.getState(), ...keyValue })
-  await LocalStorage.setItem('state', JSON.stringify(useStore.getState()))
+
+  if (preferences.saveMessages) {
+    await LocalStorage.setItem('state', JSON.stringify(useStore.getState()))
+  }
 }
 
 export async function loadState() {
+  if (!preferences.saveMessages) {
+    return
+  }
+
   const item = await LocalStorage.getItem<string>('state')
 
   if (item) {
