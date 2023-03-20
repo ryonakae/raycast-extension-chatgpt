@@ -17,6 +17,12 @@ export default function useCompletion() {
   const preferences = getPreferenceValues<Preferences>()
 
   async function chatCompletion(prompt: string) {
+    const loading = useStore.getState().loading
+    if (loading) {
+      console.log('chatCompletion aborted')
+      return
+    }
+
     console.log('chatCompletion', currentPrompt, preferences)
 
     updateState({ loading: true })

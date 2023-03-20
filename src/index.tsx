@@ -62,12 +62,7 @@ export default function Command(
       {/* prompt */}
       {preferences.imeFix ? (
         <>
-          <List.Item
-            title=""
-            subtitle="Prompt"
-            id="dummyPrompt"
-            actions={<Actions type="dummyPrompt" />}
-          />
+          <List.Item title="" subtitle="Prompt" id="dummyPrompt" />
           <Prompt />
         </>
       ) : (

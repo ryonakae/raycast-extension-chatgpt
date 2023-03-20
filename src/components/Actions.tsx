@@ -12,7 +12,7 @@ import useCompletion from '@/hooks/useCompletion'
 import { Preferences } from '@/types'
 
 type PromptActionProps = {
-  type: 'prompt' | 'dummyPrompt'
+  type: 'prompt'
 }
 type MessageActionProps = {
   type: 'message'
@@ -67,30 +67,6 @@ export default function Actions(props: ActionProps) {
 
   return (
     <ActionPanel>
-      {props.type === 'dummyPrompt' && (
-        <>
-          {preferences.imeFix && <Action title="" />}
-
-          {currentPrompt.length > 0 && (
-            <Action
-              title="Submit Prompt"
-              icon={Icon.Rocket}
-              onAction={submitPrompt}
-              shortcut={{ modifiers: ['cmd'], key: 'enter' }}
-            />
-          )}
-
-          {chatMessages.length > 0 && (
-            <Action
-              title="Clear Conversation"
-              icon={Icon.Trash}
-              onAction={clear}
-              style={Action.Style.Destructive}
-            />
-          )}
-        </>
-      )}
-
       {props.type === 'prompt' && currentPrompt.length > 0 && (
         <Action
           title="Submit Prompt"
