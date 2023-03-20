@@ -23,7 +23,7 @@
         ],
         "pathGroups": [
           {
-            "pattern": "{preact,preact/**}",
+            "pattern": "{@raycast,@raycast/**}",
             "group": "builtin",
             "position": "before"
           },

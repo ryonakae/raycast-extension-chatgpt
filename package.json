@@ -18,17 +18,24 @@
           "name": "prompt",
           "placeholder": "Prompt",
           "type": "text",
-          "required": true
+          "required": false
         }
       ]
     }
   ],
   "dependencies": {
     "@raycast/api": "^1.48.9",
+    "@raycast/utils": "^1.5.2",
+    "cross-fetch": "^3.1.5",
+    "gpt-3-encoder": "latitudegames/GPT-3-Encoder#pull/33/head",
+    "keypress": "^0.2.1",
+    "lodash": "^4.17.21",
+    "react-use": "^17.4.0",
     "zustand": "^4.3.6"
   },
   "devDependencies": {
     "@raycast/eslint-config": "1.0.5",
+    "@types/lodash": "^4.14.191",
     "@types/node": "18.8.3",
     "@types/react": "18.0.9",
     "eslint": "^7.32.0",

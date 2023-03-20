@@ -1,22 +1,55 @@
 import { Icon, LaunchProps, List } from '@raycast/api'
 
-import { useStore } from '@/Store'
-import Actions from '@/components/Actions'
+import { useState } from 'react'
+import { useMount, useUpdateEffect } from 'react-use'
+
+import { useStore, updateState, loadState } from '@/Store'
+import Message from '@/components/Message'
+import Prompt from '@/components/Prompt'
+import useCompletion from '@/hooks/useCompletion'
 
 type CommandProps = {
-  prompt: string
+  prompt?: string
 }
 
 export default function Command(
   props: LaunchProps<{ arguments: CommandProps }>
 ) {
   const { prompt: defaultPrompt } = props.arguments
-  const { currentPrompt, setCurrentPrompt } = useStore()
+  const { currentPrompt, chatMessages, loading, lastSelectedItemIndex } =
+    useStore()
+  const { chatCompletion } = useCompletion()
+  const [selectedItemId, setSelectedItemId] = useState('')
 
   function onSearchTextChange(text: string) {
     console.log('onSearchTextChange', text)
-    setCurrentPrompt(text)
+    updateState({ currentPrompt: text })
+
+    if (text.length > 0) {
+      console.log('prompt selected')
+      setSelectedItemId('prompt')
+    }
   }
+
+  useMount(async () => {
+    console.log('index mounted', defaultPrompt)
+
+    await loadState()
+
+    setSelectedItemId(String(lastSelectedItemIndex))
+
+    if (defaultPrompt) {
+      await chatCompletion(defaultPrompt)
+    }
+  })
+
+  useUpdateEffect(() => {
+    updateState({ lastSelectedItemIndex: chatMessages.length - 1 })
+  }, [chatMessages, lastSelectedItemIndex])
+
+  useUpdateEffect(() => {
+    setSelectedItemId(String(lastSelectedItemIndex))
+  }, [lastSelectedItemIndex])
 
   return (
     <List
@@ -24,19 +57,28 @@ export default function Command(
       searchBarPlaceholder="Your prompt here"
       onSearchTextChange={onSearchTextChange}
       searchText={currentPrompt}
+      isShowingDetail
+      isLoading={loading}
+      selectedItemId={selectedItemId}
     >
-      <List.Item
-        title={defaultPrompt}
-        icon={Icon.Circle}
-        accessories={[{ text: 'xxx tokens' }]}
-        actions={<Actions content={defaultPrompt} prompt={currentPrompt} />}
-      />
-      <List.Item
-        title="test"
-        icon={Icon.Circle}
-        accessories={[{ text: 'xxx tokens' }]}
-        actions={<Actions content="test" prompt={currentPrompt} />}
-      />
+      {/* prompt */}
+      <List.Section title="Prompt">
+        <Prompt />
+      </List.Section>
+
+      {/* messages */}
+      {chatMessages.length > 0 && (
+        <List.Section title="Messages">
+          {chatMessages.map((message, index) => (
+            <Message key={index} index={index} message={message} />
+          ))}
+        </List.Section>
+      )}
+
+      {/* empty */}
+      {chatMessages.length === 0 && (
+        <List.EmptyView icon={Icon.Message} title="Let's start a chat!" />
+      )}
     </List>
   )
 }
