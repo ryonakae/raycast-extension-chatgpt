@@ -1,4 +1,4 @@
-import { Icon, LaunchProps, List } from '@raycast/api'
+import { getPreferenceValues, Icon, LaunchProps, List } from '@raycast/api'
 
 import { useState } from 'react'
 import { useMount, useUpdateEffect } from 'react-use'
@@ -7,6 +7,7 @@ import { useStore, updateState, loadState } from '@/Store'
 import Message from '@/components/Message'
 import Prompt from '@/components/Prompt'
 import useCompletion from '@/hooks/useCompletion'
+import { Preferences } from '@/types'
 
 type CommandProps = {
   prompt?: string
@@ -20,6 +21,7 @@ export default function Command(
     useStore()
   const { chatCompletion } = useCompletion()
   const [selectedItemId, setSelectedItemId] = useState('')
+  const preferences = getPreferenceValues<Preferences>()
 
   function onSearchTextChange(text: string) {
     console.log('onSearchTextChange', text)
@@ -60,6 +62,7 @@ export default function Command(
       isShowingDetail
       isLoading={loading}
       selectedItemId={selectedItemId}
+      navigationTitle={`ChatGPT (Model: ${preferences.model})`}
     >
       {/* prompt */}
       <List.Section title="Prompt">
