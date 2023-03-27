@@ -29,7 +29,7 @@ export default function Message({ index, message }: MessageProps) {
     if (role === 'user') {
       return Icon.Person
     } else if (role === 'assistant') {
-      return Icon.MemoryChip
+      return Icon.Keyboard
     } else {
       return Icon.Circle
     }
@@ -56,7 +56,7 @@ export default function Message({ index, message }: MessageProps) {
       title={getName(message.role)}
       icon={getListIcon(message.role)}
       subtitle={message.content}
-      accessories={[{ text: `${tokens}`, tooltip: `${tokens} tokens` }]}
+      // accessories={[{ text: `${tokens}`, tooltip: `${tokens} tokens` }]}
       detail={<List.Item.Detail markdown={message.content} />}
       actions={<Actions type="message" content={message.content} />}
     />

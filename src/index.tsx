@@ -73,7 +73,7 @@ export default function Command(
 
       {/* messages */}
       {chatMessages.length > 0 && (
-        <List.Section title={`Messages (Total: ${totalTokens} tokens)`}>
+        <List.Section title={`Messages (Total ${totalTokens} tokens)`}>
           {[...chatMessages].reverse().map((message, index) => (
             <Message key={index} index={index} message={message} />
           ))}

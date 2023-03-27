@@ -70,39 +70,37 @@ export default function Actions(props: ActionProps) {
       {props.type === 'prompt' && currentPrompt.length > 0 && (
         <Action
           title="Submit Prompt"
-          icon={Icon.Rocket}
+          icon={Icon.Bubble}
           onAction={submitPrompt}
           shortcut={{ modifiers: ['cmd'], key: 'enter' }}
         />
       )}
 
+      {preferences.imeFix && (
+        <Action
+          title="Focus Prompt"
+          icon={Icon.ArrowUp}
+          onAction={focusToPrompt}
+          shortcut={{ modifiers: ['cmd'], key: 'l' }}
+        />
+      )}
+
       {props.type === 'message' && (
-        <>
-          {preferences.imeFix && (
-            <Action
-              title="Focus to Prompt"
-              icon={Icon.Bubble}
-              onAction={focusToPrompt}
-              shortcut={{ modifiers: ['cmd'], key: 'l' }}
-            />
-          )}
+        <Action
+          title="Copy Text"
+          icon={Icon.CopyClipboard}
+          onAction={() => copy(props.content)}
+          shortcut={{ modifiers: ['cmd'], key: 'c' }}
+        />
+      )}
 
-          <Action
-            title="Copy Text"
-            icon={Icon.CopyClipboard}
-            onAction={() => copy(props.content)}
-            shortcut={{ modifiers: ['cmd'], key: 'c' }}
-          />
-
-          {chatMessages.length > 0 && (
-            <Action
-              title="Clear Conversation"
-              icon={Icon.Trash}
-              onAction={clear}
-              style={Action.Style.Destructive}
-            />
-          )}
-        </>
+      {chatMessages.length > 0 && (
+        <Action
+          title="Clear Conversation"
+          icon={Icon.Trash}
+          onAction={clear}
+          style={Action.Style.Destructive}
+        />
       )}
     </ActionPanel>
   )

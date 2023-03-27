@@ -8,8 +8,28 @@ import { useStore } from '@/Store'
 import Actions from '@/components/Actions'
 
 export default function Prompt() {
-  const { currentPrompt } = useStore()
+  const { currentPrompt, loading } = useStore()
   const [tokens, setTokens] = useState(0)
+
+  function getTitle() {
+    if (currentPrompt.length === 0) {
+      return ''
+    } else if (loading) {
+      return 'Loading...'
+    } else {
+      return 'Submit'
+    }
+  }
+
+  function getAccessories() {
+    if (currentPrompt.length === 0) {
+      return []
+    } else if (loading) {
+      return []
+    } else {
+      return [{ text: `${tokens} tokens` }]
+    }
+  }
 
   function updateTokens(text: string) {
     const tokens = encode(text)
@@ -28,13 +48,9 @@ export default function Prompt() {
     <List.Item
       id="prompt"
       icon={Icon.Bubble}
-      title={currentPrompt}
-      subtitle={currentPrompt.length === 0 ? "Let's start a chat!" : ''}
-      accessories={
-        currentPrompt.length > 0
-          ? [{ text: `${tokens}`, tooltip: `${tokens} tokens` }]
-          : []
-      }
+      title={getTitle()}
+      subtitle={currentPrompt.length === 0 ? 'Submit' : ''}
+      accessories={getAccessories()}
       actions={<Actions type="prompt" />}
     />
   )
