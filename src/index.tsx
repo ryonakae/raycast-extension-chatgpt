@@ -1,12 +1,10 @@
 import { getPreferenceValues, LaunchProps, List } from '@raycast/api'
 
-import { useState } from 'react'
-import { useMount, useUpdateEffect } from 'react-use'
+import { useMount } from 'react-use'
 
 import { useStore, updateState, loadState } from '@/Store'
-import Actions from '@/components/Actions'
 import Message from '@/components/Message'
-import Prompt from '@/components/Prompt'
+import Submit from '@/components/Submit'
 import useCompletion from '@/hooks/useCompletion'
 import { Preferences } from '@/types'
 
@@ -29,9 +27,9 @@ export default function Command(
 
     if (text.length > 0) {
       if (preferences.imeFix) {
-        updateState({ selectedItemId: 'dummyPrompt' })
+        updateState({ selectedItemId: 'dummySubmit' })
       } else {
-        updateState({ selectedItemId: 'prompt' })
+        updateState({ selectedItemId: 'submit' })
       }
     }
   }
@@ -54,22 +52,12 @@ export default function Command(
       searchBarPlaceholder="Your prompt here"
       onSearchTextChange={onSearchTextChange}
       searchText={currentPrompt}
-      isShowingDetail={chatMessages.length > 0}
+      isShowingDetail
       isLoading={loading}
       selectedItemId={selectedItemId}
       navigationTitle={`ChatGPT (Model: ${preferences.model})`}
     >
-      {/* prompt */}
-      {preferences.imeFix ? (
-        <>
-          <List.Item title="" subtitle="Prompt" id="dummyPrompt" />
-          <Prompt />
-        </>
-      ) : (
-        <List.Section title="Prompt">
-          <Prompt />
-        </List.Section>
-      )}
+      <Submit />
 
       {/* messages */}
       {chatMessages.length > 0 && (

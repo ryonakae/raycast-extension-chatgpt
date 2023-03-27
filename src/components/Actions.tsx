@@ -58,9 +58,9 @@ export default function Actions(props: ActionProps) {
 
     setTimeout(() => {
       if (preferences.imeFix) {
-        updateState({ selectedItemId: 'dummyPrompt' })
+        updateState({ selectedItemId: 'dummySubmit' })
       } else {
-        updateState({ selectedItemId: 'prompt' })
+        updateState({ selectedItemId: 'submit' })
       }
     }, 100)
   }
@@ -70,7 +70,7 @@ export default function Actions(props: ActionProps) {
       {props.type === 'prompt' && currentPrompt.length > 0 && (
         <Action
           title="Submit Prompt"
-          icon={Icon.Bubble}
+          icon={Icon.ArrowRight}
           onAction={submitPrompt}
           shortcut={{ modifiers: ['cmd'], key: 'enter' }}
         />
@@ -86,21 +86,23 @@ export default function Actions(props: ActionProps) {
       )}
 
       {props.type === 'message' && (
-        <Action
-          title="Copy Text"
-          icon={Icon.CopyClipboard}
-          onAction={() => copy(props.content)}
-          shortcut={{ modifiers: ['cmd'], key: 'c' }}
-        />
-      )}
+        <>
+          <Action
+            title="Copy Text"
+            icon={Icon.CopyClipboard}
+            onAction={() => copy(props.content)}
+            shortcut={{ modifiers: ['cmd'], key: 'c' }}
+          />
 
-      {chatMessages.length > 0 && (
-        <Action
-          title="Clear Conversation"
-          icon={Icon.Trash}
-          onAction={clear}
-          style={Action.Style.Destructive}
-        />
+          {chatMessages.length > 0 && (
+            <Action
+              title="Clear Conversation"
+              icon={Icon.Trash}
+              onAction={clear}
+              style={Action.Style.Destructive}
+            />
+          )}
+        </>
       )}
     </ActionPanel>
   )

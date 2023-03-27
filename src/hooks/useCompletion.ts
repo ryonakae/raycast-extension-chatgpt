@@ -13,7 +13,6 @@ import {
 } from '@/types'
 
 export default function useCompletion() {
-  const { currentPrompt } = useStore()
   const preferences = getPreferenceValues<Preferences>()
 
   async function chatCompletion(prompt: string) {
@@ -23,9 +22,7 @@ export default function useCompletion() {
       return
     }
 
-    console.log('chatCompletion', currentPrompt, preferences)
-
-    updateState({ loading: true })
+    console.log('chatCompletion', prompt, preferences)
 
     const chatMessages = useStore.getState().chatMessages
     const message: ChatMessage = {
@@ -35,6 +32,9 @@ export default function useCompletion() {
     const messages: ChatMessage[] = [...chatMessages, message]
 
     updateState({
+      loading: true,
+      currentPrompt: '', // いったんpromptをクリア
+      selectedItemId: 'message-0', // 一番上のメッセージを選択状態にする
       chatMessages: messages,
     })
 
@@ -62,12 +62,6 @@ export default function useCompletion() {
         if (!response.ok) {
           console.error('response.ok:', response.ok)
           console.error('response.status:', response.status)
-
-          // chatMessagesの最後の要素（リクエスト前に追加したメッセージ）を削除
-          updateState({
-            chatMessages: dropRight(useStore.getState().chatMessages),
-          })
-
           const data = (await response.json()) as OpenAiApiError
           throw new Error(data.error.message) // 以降の処理は中断される、catch(の処理が実行される)
         }
@@ -91,6 +85,13 @@ export default function useCompletion() {
       })
       .catch(async (err: Error) => {
         console.log('err', err.message)
+
+        updateState({
+          currentPrompt: prompt, // promptを元に戻す
+          selectedItemId: 'submit', // submitを選択状態にする
+          chatMessages: dropRight(useStore.getState().chatMessages), // chatMessagesの最後の要素（リクエスト前に追加したメッセージ）を削除
+        })
+
         await showToast({
           style: Toast.Style.Failure,
           title: 'Error.',
