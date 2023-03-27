@@ -52,7 +52,7 @@ export default function Prompt() {
       {preferences.imeFix && (
         <List.Item
           title=""
-          subtitle={currentPrompt.length > 0 ? `${tokens} tokens` : ' '}
+          subtitle={`${tokens} tokens`}
           id="dummySubmit"
           detail={<List.Item.Detail markdown={getDetailText()} />}
         />
