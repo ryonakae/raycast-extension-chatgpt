@@ -29,7 +29,7 @@ export default function useCompletion() {
       role: 'user',
       content: prompt,
     }
-    const messages: ChatMessage[] = [...chatMessages, message]
+    let messages: ChatMessage[] = [...chatMessages, message]
 
     updateState({
       loading: true,
@@ -37,6 +37,19 @@ export default function useCompletion() {
       selectedItemId: 'message-0', // 一番上のメッセージを選択状態にする
       chatMessages: messages,
     })
+
+    // システムメッセージがある場合は、システムメッセージをmessagesの先頭に追加する
+    // storeには保存しないので、api叩く時だけ使われる
+    const systemMessage = preferences.systemMessage
+    if (systemMessage) {
+      messages = [
+        {
+          role: 'system',
+          content: systemMessage,
+        },
+        ...messages,
+      ]
+    }
 
     fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',

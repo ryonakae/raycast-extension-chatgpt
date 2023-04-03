@@ -9,6 +9,7 @@ export type State = {
 export type Preferences = {
   apiKey: string
   model: string
+  systemMessage: string
   temperature: string
   maxTokens: string
   stop: string

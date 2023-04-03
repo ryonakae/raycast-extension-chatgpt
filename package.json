@@ -10,7 +10,7 @@
   "commands": [
     {
       "name": "index",
-      "title": "ChatGPT",
+      "title": "Raycast GPT",
       "description": "Talk with the ChatGPT!",
       "mode": "view",
       "arguments": [
@@ -96,6 +96,14 @@
       ]
     },
     {
+      "name": "systemMessage",
+      "description": "The system message helps set the behavior of the assistant. For example, \"You are a helpful assistant.\"",
+      "type": "textfield",
+      "required": false,
+      "default": "",
+      "title": "System message"
+    },
+    {
       "name": "temperature",
       "description": "What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or top_p but not both.",
       "type": "textfield",
@@ -169,5 +177,5 @@
     "postinstall": "husky install",
     "publish": "ray publish"
   },
-  "title": "ChatGPT"
+  "title": "Raycast GPT"
 }
