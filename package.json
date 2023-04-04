@@ -5,13 +5,18 @@
   "author": "ryonakae",
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "categories": [
-    "Web"
+    "Web",
+    "Communication",
+    "Data",
+    "Documentation",
+    "Fun",
+    "Productivity"
   ],
   "commands": [
     {
       "name": "index",
-      "title": "Raycast GPT",
-      "description": "Talk with the ChatGPT!",
+      "title": "Chat with GPT",
+      "description": "Talk with the ChatGPT.",
       "mode": "view",
       "arguments": [
         {

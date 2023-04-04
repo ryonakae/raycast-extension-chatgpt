@@ -55,7 +55,7 @@ export default function Command(
       isShowingDetail
       isLoading={loading}
       selectedItemId={selectedItemId}
-      navigationTitle={`Raycast GPT (Model: ${preferences.model})`}
+      navigationTitle={`Chat with GPT (Model: ${preferences.model})`}
     >
       <Submit />
 
