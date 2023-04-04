@@ -10,6 +10,7 @@ export const useStore = create<State>(set => ({
   chatMessages: [],
   selectedItemId: '',
   totalTokens: 0,
+  systemMessage: '',
 }))
 
 const preferences = getPreferenceValues<Preferences>()

@@ -14,6 +14,8 @@ export default function Message({ index, message }: MessageProps) {
       return 'You'
     } else if (role === 'assistant') {
       return 'ChatGPT'
+    } else if (role === 'system') {
+      return 'System'
     } else {
       return ''
     }
@@ -24,6 +26,8 @@ export default function Message({ index, message }: MessageProps) {
       return Icon.Person
     } else if (role === 'assistant') {
       return Icon.Keyboard
+    } else if (role === 'system') {
+      return Icon.Cog
     } else {
       return Icon.Circle
     }

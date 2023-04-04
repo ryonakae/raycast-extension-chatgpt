@@ -5,9 +5,11 @@ import {
   Clipboard,
   Icon,
   getPreferenceValues,
+  useNavigation,
 } from '@raycast/api'
 
 import { updateState, useStore } from '@/Store'
+import SystemMessageForm from '@/components/SystemMessageForm'
 import useCompletion from '@/hooks/useCompletion'
 import { Preferences } from '@/types'
 
@@ -24,6 +26,7 @@ type ActionProps = PromptActionProps | MessageActionProps
 export default function Actions(props: ActionProps) {
   const { currentPrompt, chatMessages } = useStore()
   const { chatCompletion } = useCompletion()
+  const { push } = useNavigation()
   const preferences = getPreferenceValues<Preferences>()
 
   async function submitPrompt() {
@@ -36,13 +39,13 @@ export default function Actions(props: ActionProps) {
     await chatCompletion(currentPrompt)
   }
 
-  async function clear() {
+  function clear() {
     console.log('clear')
     updateState({
       chatMessages: [],
       totalTokens: 0,
     })
-    await showToast({ title: 'Conversation cleared.' })
+    showToast({ title: 'Conversation cleared.' })
   }
 
   async function copy(text: string) {
@@ -65,6 +68,11 @@ export default function Actions(props: ActionProps) {
     }, 100)
   }
 
+  function setSystemMessage() {
+    console.log('setSystemMessage')
+    push(<SystemMessageForm />)
+  }
+
   return (
     <ActionPanel>
       {props.type === 'prompt' && currentPrompt.length > 0 && (
@@ -82,6 +90,15 @@ export default function Actions(props: ActionProps) {
           icon={Icon.ArrowUp}
           onAction={focusToPrompt}
           shortcut={{ modifiers: ['cmd'], key: 'l' }}
+        />
+      )}
+
+      {props.type === 'prompt' && (
+        <Action
+          title="Set System Message"
+          icon={Icon.Cog}
+          onAction={setSystemMessage}
+          shortcut={{ modifiers: ['cmd'], key: 's' }}
         />
       )}
 

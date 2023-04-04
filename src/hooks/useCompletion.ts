@@ -24,6 +24,10 @@ export default function useCompletion() {
 
     console.log('chatCompletion', prompt, preferences)
 
+    updateState({
+      loading: true,
+    })
+
     const chatMessages = useStore.getState().chatMessages
     const message: ChatMessage = {
       role: 'user',
@@ -31,17 +35,9 @@ export default function useCompletion() {
     }
     let messages: ChatMessage[] = [...chatMessages, message]
 
-    updateState({
-      loading: true,
-      currentPrompt: '', // いったんpromptをクリア
-      selectedItemId: 'message-0', // 一番上のメッセージを選択状態にする
-      chatMessages: messages,
-    })
-
     // システムメッセージがある場合は、システムメッセージをmessagesの先頭に追加する
-    // storeには保存しないので、api叩く時だけ使われる
-    const systemMessage = preferences.systemMessage
-    if (systemMessage) {
+    const systemMessage = useStore.getState().systemMessage
+    if (systemMessage.length > 0) {
       messages = [
         {
           role: 'system',
@@ -50,6 +46,12 @@ export default function useCompletion() {
         ...messages,
       ]
     }
+
+    updateState({
+      currentPrompt: '', // いったんpromptをクリア
+      selectedItemId: 'message-0', // 一番上のメッセージを選択状態にする
+      chatMessages: messages,
+    })
 
     fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',

@@ -4,12 +4,12 @@ export type State = {
   chatMessages: ChatMessage[]
   selectedItemId: string
   totalTokens: number
+  systemMessage: string
 }
 
 export type Preferences = {
   apiKey: string
   model: string
-  systemMessage: string
   temperature: string
   maxTokens: string
   stop: string
