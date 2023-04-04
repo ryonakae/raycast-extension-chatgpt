@@ -18,3 +18,9 @@ Enabling this option will save your chat even if you exit the extension and clos
 ### IME Fix
 
 There is a bug in Raycast when entering characters with IME. This option is to avoid that issue. When this option is enabled, pressing Enter after entering characters in the SearchBar will no longer do anything (if the top list item is selected). To submit the prompt, you need to select "Submit" below and press Enter. This option is useful for people who use languages such as Japanese, Chinese, and Korean.
+
+## System Message
+
+You can set system messages to configure the behavior of the assistant. For more information on system messages, please refer [here](https://platform.openai.com/docs/guides/chat/introduction).
+
+To set a system message, open the plugin and select "Set System Message" from the Actions menu while "Submit" is selected. Enter your desired system message in the text area and confirm.
