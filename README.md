@@ -21,6 +21,6 @@ There is a bug in Raycast when entering characters with IME. This option is to a
 
 ## System Message
 
-You can set system messages to configure the behavior of the assistant. For more information on system messages, please refer [here](https://platform.openai.com/docs/guides/chat/introduction).
+You can set a system message to configure the behavior of the assistant. For more information on the system message, please refer [here](https://platform.openai.com/docs/guides/chat/introduction).
 
-To set a system message, open the plugin and select "Set System Message" from the Actions menu while "Submit" is selected. Enter your desired system message in the text area and confirm.
+To set the system message, open the plugin and select "Set System Message" from the Actions while "Submit" is selected. your favorite system message in the text area and confirm.
