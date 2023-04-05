@@ -30,10 +30,8 @@
   ],
   "dependencies": {
     "@raycast/api": "^1.49.1",
-    "@raycast/utils": "^1.5.2",
     "cross-fetch": "^3.1.5",
     "gpt-3-encoder": "latitudegames/GPT-3-Encoder#pull/33/head",
-    "keypress": "^0.2.1",
     "lodash": "^4.17.21",
     "react-use": "^17.4.0",
     "zustand": "^4.3.6"
@@ -41,7 +39,6 @@
   "devDependencies": {
     "@raycast/eslint-config": "1.0.5",
     "@types/lodash": "^4.14.191",
-    "@types/node": "18.8.3",
     "@types/react": "18.0.9",
     "eslint": "^7.32.0",
     "eslint-import-resolver-typescript": "^3.5.3",
@@ -55,7 +52,8 @@
   "license": "MIT",
   "lint-staged": {
     "*.{ts,tsx}": [
-      "bash -c 'yarn fix-lint'"
+      "bash -c 'npm run typecheck'",
+      "bash -c 'npm run fix-lint'"
     ]
   },
   "preferences": [
@@ -171,7 +169,8 @@
     "dev": "ray develop",
     "fix-lint": "ray lint --fix",
     "lint": "ray lint",
-    "publish": "ray publish"
+    "publish": "ray publish",
+    "typecheck": "tsc --noEmit"
   },
   "title": "Raycast GPT"
 }
